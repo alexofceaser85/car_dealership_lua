@@ -1,30 +1,16 @@
 <roblox version="4">
-  <Item class="Lighting" referent="0">
-    <Properties>
-      <string name="Name">Lighting</string>
-      <Color3 name="Ambient">
-        <R>0</R>
-        <G>0</G>
-        <B>0</B>
-      </Color3>
-      <float name="Brightness">2</float>
-      <bool name="GlobalShadows">true</bool>
-      <bool name="Outlines">false</bool>
-      <token name="Technology">1</token>
-    </Properties>
-  </Item>
-  <Item class="ReplicatedStorage" referent="1">
+  <Item class="ReplicatedStorage" referent="0">
     <Properties>
       <string name="Name">ReplicatedStorage</string>
     </Properties>
-    <Item class="Folder" referent="2">
+    <Item class="Folder" referent="1">
       <Properties>
         <string name="Name">Common</string>
       </Properties>
-      <Item class="ModuleScript" referent="3">
+      <Item class="ModuleScript" referent="2">
         <Properties>
           <string name="Name">Car</string>
-          <string name="Source">local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+          <string name="Source">local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
 --[[
@@ -236,10 +222,10 @@ end
 return Car</string>
         </Properties>
       </Item>
-      <Item class="ModuleScript" referent="4">
+      <Item class="ModuleScript" referent="3">
         <Properties>
           <string name="Name">Dealership</string>
-          <string name="Source">local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+          <string name="Source">local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
 --[[
@@ -477,24 +463,84 @@ end
 return Dealership</string>
         </Properties>
       </Item>
+      <Item class="Folder" referent="4">
+        <Properties>
+          <string name="Name">errormessages</string>
+        </Properties>
+        <Item class="ModuleScript" referent="5">
+          <Properties>
+            <string name="Name">ErrorMessages</string>
+            <string name="Source">local ErrorMessages = {}
+ErrorMessages.__index = ErrorMessages
+
+function ErrorMessages.new()
+
+    local newErrorMessages = setmetatable({}, ErrorMessages)
+
+    --error messages for car class constructor--
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_MAKE = "There was an attempt at creating a car with a nil car"
+    newErrorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_MAKE = "There was an attempt at creating a car with an empty car make"
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_MODEL = "There was an attempt at creating a car with a nil car make"
+    newErrorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_MODEL = "There was an attempt at creating a car with an empty car model"
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_COLOR = "There was an attempt at creating a car with a nil car color"
+    newErrorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_COLOR = "There was an attempt at creating a car with an empty car color"
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TYPE = "There was an attempt at creating a car with a nil car type"
+    newErrorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_TYPE = "There was an attempt at creating a car with an empty car type"
+    newErrorMessages.SHOULD_NOT_ALLOW_CAR_WITH_PURCHASE_PRICE_ZERO_OR_LESS = "There was an attempt at creating a car with a purchase price at zero or less"
+    newErrorMessages.SHOULD_NOT_ALLOW_CAR_WITH_SELL_PRICE_ZERO_OR_LESS = "There was an attempt at creating a car with a sell price at zero or less"
+
+    --error messages for car class setters--
+    newErrorMessages.SHOULD_NOT_SET_PURCHASE_PRICE_ZERO_OR_LESS = "Cannot set the cars purchase price to zero or less"
+    newErrorMessages.SHOULD_NOT_SET_SELL_PRICE_ZERO_OR_LESS = "Cannot set the cars sell price to zero or less"
+
+    --error messages for the car class equals method
+    newErrorMessages.SHOULD_NOT_CHECK_EQUALS_FOR_NIL_CAR = "Cannot check if car is equal to nil car"
+
+    --error messages for the dealership class constructor--
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_DEALER_NAME = "Cannot make a new dealership with a nil name"
+    newErrorMessages.SHOULD_NOT_ALLOW_EMPTY_DEALER_NAME = "Cannot make a new dealership with an empty name"
+    newErrorMessages.SHOULD_NOT_ALLOW_CASH_BALANCE_AT_ZERO_OR_LESS = "Cannot make a new dealership with a cash balance at zero or less"
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_DEALER_CARS = "Cannot make a new dealership with nil cars"
+
+    --error messages for the set dealership name--
+    newErrorMessages.SHOULD_NOT_SET_NIL_DEALER_NAME = "Cannot set dealership name to nil value"
+    newErrorMessages.SHOULD_NOT_SET_EMPTY_DEALER_NAME = "Cannot set dealership name to an empty name"
+
+    --error messages for the set cash balance--
+    newErrorMessages.SHOULD_NOT_SET_CASH_BALANCE_TO_BELOW_ZERO = "Cannot set the dealership cash balance to below zero"
+
+    --error messages for the increment cash balance--
+    newErrorMessages.SHOULD_NOT_INCREMENT_CASH_BALANCE_BY_ZERO_OR_LESS= "Cannot increment the dealership cash balance by zero or less"
+
+    --error messages for the decrement cash balance--
+    newErrorMessages.SHOULD_NOT_DECREMENT_CASH_BALANCE_BY_ZERO_OR_LESS = "Cannot decrement the dealership cash balance by zero or less"
+    newErrorMessages.SHOULD_NOT_DECREMENT_CASH_BALANCE_BY_MORE_THAN_CASH_BALANCE = "Dealership does not have enough cash balance"
+
+    --error messages for the dealership method add car--
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TO_ADD = "Cannot add a nil car to the dealership"
+
+    --error messages for the dealership method remove car--
+    newErrorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TO_REMOVE = "Cannot remove a nil car from the dealership"
+
+    return newErrorMessages
+end
+
+return ErrorMessages</string>
+          </Properties>
+        </Item>
+      </Item>
     </Item>
   </Item>
-  <Item class="ServerScriptService" referent="5">
+  <Item class="ServerScriptService" referent="6">
     <Properties>
       <string name="Name">ServerScriptService</string>
     </Properties>
-    <Item class="Script" referent="6">
+    <Item class="Script" referent="7">
       <Properties>
         <string name="Name">Server</string>
         <string name="Source">print("Hello world, from server!")</string>
       </Properties>
     </Item>
-  </Item>
-  <Item class="SoundService" referent="7">
-    <Properties>
-      <string name="Name">SoundService</string>
-      <bool name="RespectFilteringEnabled">true</bool>
-    </Properties>
   </Item>
   <Item class="StarterPlayer" referent="8">
     <Properties>
@@ -510,30 +556,6 @@ return Dealership</string>
           <string name="Source">print("Hello world, from client!")</string>
         </Properties>
       </Item>
-    </Item>
-  </Item>
-  <Item class="Workspace" referent="11">
-    <Properties>
-      <string name="Name">Workspace</string>
-      <bool name="FilteringEnabled">true</bool>
-    </Properties>
-    <Item class="Part" referent="12">
-      <Properties>
-        <string name="Name">Baseplate</string>
-        <bool name="Anchored">true</bool>
-        <Color3uint8 name="Color3uint8">6446690</Color3uint8>
-        <bool name="Locked">true</bool>
-        <Vector3 name="Position">
-          <X>0</X>
-          <Y>-10</Y>
-          <Z>0</Z>
-        </Vector3>
-        <Vector3 name="size">
-          <X>512</X>
-          <Y>20</Y>
-          <Z>512</Z>
-        </Vector3>
-      </Properties>
     </Item>
   </Item>
 </roblox>
