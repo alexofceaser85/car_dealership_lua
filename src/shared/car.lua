@@ -183,4 +183,28 @@ function Car:setSellPrice(sellPriceToSet)
     self.SellPrice = sellPriceToSet
 end
 
+--[[
+    Checks if a car is equal to another car
+
+    precondition checkIsEqual != nil
+    postcondition none
+
+    param checkIsEqual the car to check if equal to
+
+    return true if the cars are equal and false otherwise
+]]--
+
+function Car:isEqual(checkIsEqual)
+    if (checkIsEqual == nil) then
+        error(errorMessages.SHOULD_NOT_CHECK_EQUALS_FOR_NIL_CAR)
+    end
+
+    if (self.Make == checkIsEqual:getMake() and self.Model == checkIsEqual:getModel() and self.Color == checkIsEqual:getColor() and self.Type == checkIsEqual:getType() 
+    and self.PurchasePrice == checkIsEqual:getPurchasePrice() and self.SellPrice == checkIsEqual:getSellPrice()) then
+        return true
+    else
+        return false
+    end
+end
+
 return Car

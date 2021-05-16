@@ -3,6 +3,9 @@ local Car = dofile(".\\src\\shared\\Car.lua")
 local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
+local CarConstructorTests = {}
+CarConstructorTests.__index = CarConstructorTests
+
 function testShouldNotInitializeNilMake()
     luaUnit.assertErrorMsgContains(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_MAKE, Car.new, nil, "Focus", "Black", "Sedan", 14000, 17000)
 end
@@ -89,4 +92,6 @@ function testShouldInitializeValidValuesWellAboveOne()
     luaUnit.assertEquals(newCar:getSellPrice(), 17000)
 end
 
-os.exit(luaUnit.LuaUnit.run())
+luaUnit.LuaUnit.run()
+
+return CarConstructorTests

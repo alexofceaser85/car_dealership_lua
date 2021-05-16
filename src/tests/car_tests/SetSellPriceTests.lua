@@ -3,6 +3,9 @@ local Car = dofile(".\\src\\shared\\Car.lua")
 local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
+local SetSellPriceTests = {}
+SetSellPriceTests.__index = SetSellPriceTests
+
 function testShouldSetSellPriceAtOneAboveZero()
     local newCar = Car.new("Ford", "Focus", "Black", "Sedan", 14000, 17000)
     luaUnit.assertEquals(newCar:getSellPrice(), 17000)
@@ -36,4 +39,6 @@ function testShouldNotSetSellWellLessThanZero()
     luaUnit.assertErrorMsgContains(errorMessages.SHOULD_NOT_SET_SELL_PRICE_ZERO_OR_LESS, newCar.setSellPrice, newCar, -14000)
 end
 
-os.exit(luaUnit.LuaUnit.run())
+luaUnit.LuaUnit.run()
+
+return SetSellPriceTests
