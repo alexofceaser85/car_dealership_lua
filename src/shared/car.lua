@@ -1,4 +1,4 @@
-local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
 --[[

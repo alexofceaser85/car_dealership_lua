@@ -23,46 +23,488 @@
       </Properties>
       <Item class="ModuleScript" referent="3">
         <Properties>
-          <string name="Name">car</string>
-          <string name="Source"><![CDATA[local Car = {}
+          <string name="Name">Car</string>
+          <string name="Source">local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+local errorMessages = errorMessagesFile.new()
 
-Car.Model = "model"
-Car.Color = "Blue"
+--[[
+    This is the car object that holds the data for each car in the dealership
 
-function changeColor (colorToChage)
-    Car.Color = colorToChage
+    author: Alex DeCesare
+    version: 08-May-2021
+]]--
+
+local Car = {}
+Car.__index = Car
+
+--[[
+    This is the constructor of the car object
+
+    preconditions
+        make != nil &amp;&amp; len(make) >= 1
+        &amp;&amp; model != nil &amp;&amp; len(model) >= 1
+        &amp;&amp; color != nil &amp;&amp; len(color) >= 1
+        &amp;&amp; type != nil &amp;&amp; len(type) >= 1
+        &amp;&amp; purchasePrice >= 0 &amp;&amp; sell_price >= 0
+
+    postconditions
+        self.Make == make
+        self.Model == model
+        self.Color == color
+        self.Type == type
+
+    return
+        the new car that was created
+]]--
+
+function Car.new(make, model, color, type, purchasePrice, sellPrice)
+
+    if (make == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_MAKE)
+    end
+    if (string.len(make) &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_MAKE)
+    end
+    if (model == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_MODEL)
+    end
+    if (string.len(model) &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_MODEL)
+    end
+    if (color == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_COLOR)
+    end
+    if (string.len(color) &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_COLOR)
+    end
+    if (type == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TYPE)
+    end
+    if (string.len(type) &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_EMPTY_CAR_TYPE)
+    end
+    if (purchasePrice &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_CAR_WITH_PURCHASE_PRICE_ZERO_OR_LESS)
+    end
+    if (sellPrice &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_CAR_WITH_SELL_PRICE_ZERO_OR_LESS)
+    end    
+
+    local newCar = setmetatable({}, Car)
+    newCar.Make = make
+    newCar.Model = model
+    newCar.Color = color
+    newCar.Type = type
+    newCar.PurchasePrice = purchasePrice
+    newCar.SellPrice = sellPrice
+
+    return newCar
 end
-]]></string>
+
+--[[
+    Gets the make of the car
+
+    precondition none
+    postcondition none
+
+    return: the make of the car
+]]--
+
+function Car:getMake()
+    return self.Make
+end
+
+--[[
+    Gets the model of the car
+
+    precondition none
+    postcondition none
+
+    return: the model of the car
+]]--
+
+function Car:getModel()
+    return self.Model
+end
+
+--[[
+    Gets the color of the car
+
+    precondition none
+    postcondition none
+
+    return: the color of the car
+]]--
+
+function Car:getColor()
+    return self.Color
+end
+
+--[[
+    Gets the type of the car
+
+    precondition none
+    postcondition none
+
+    return: the type of the car
+]]--
+
+function Car:getType()
+    return self.Type
+end
+
+--[[
+    Gets the purchase price of the car
+
+    precondition none
+    postcondition none
+
+    return: the purchase price of the car
+]]--
+
+function Car:getPurchasePrice()
+    return self.PurchasePrice
+end
+
+--[[
+    Sets the purchase price of the car
+
+    precondition purchasePriceToSet > 0
+    postcondition self.PurchasePrice == purchasePriceToSet
+]]--
+
+function Car:setPurchasePrice(purchasePriceToSet)
+    if (purchasePriceToSet &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_SET_PURCHASE_PRICE_ZERO_OR_LESS)
+    end
+
+    self.PurchasePrice = purchasePriceToSet
+end
+
+--[[
+    Gets the sell price of the car
+
+    precondition none
+    postcondition none
+
+    return: the sell price of the car
+]]--
+
+function Car:getSellPrice()
+    return self.SellPrice
+end
+
+--[[
+    Sets the sell price of the car
+
+    precondition sellPriceToSet > 0
+    postcondition self.SellPrice == sellPriceToSet
+]]--
+
+function Car:setSellPrice(sellPriceToSet)
+    if (sellPriceToSet &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_SET_SELL_PRICE_ZERO_OR_LESS)
+    end
+
+    self.SellPrice = sellPriceToSet
+end
+
+--[[
+    Checks if a car is equal to another car
+
+    precondition checkIsEqual != nil
+    postcondition none
+
+    param checkIsEqual the car to check if equal to
+
+    return true if the cars are equal and false otherwise
+]]--
+
+function Car:isEqual(checkIsEqual)
+    if (checkIsEqual == nil) then
+        error(errorMessages.SHOULD_NOT_CHECK_EQUALS_FOR_NIL_CAR)
+    end
+
+    if (self.Make == checkIsEqual:getMake() and self.Model == checkIsEqual:getModel() and self.Color == checkIsEqual:getColor() and self.Type == checkIsEqual:getType() 
+    and self.PurchasePrice == checkIsEqual:getPurchasePrice() and self.SellPrice == checkIsEqual:getSellPrice()) then
+        return true
+    else
+        return false
+    end
+end
+
+return Car</string>
+        </Properties>
+      </Item>
+      <Item class="ModuleScript" referent="4">
+        <Properties>
+          <string name="Name">Dealership</string>
+          <string name="Source">local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+local errorMessages = errorMessagesFile.new()
+
+--[[
+    This class stores the information for each car dealership, including the cars for the dealship
+
+    author: Alex DeCesare
+    version: 09-May-2021
+]]--
+
+local Dealership = {}
+Dealership.__index = Dealership
+
+--[[
+    This is the constructor of the dealership object
+
+    preconditions
+        name != nil
+        &amp;&amp; len(name) != 0
+        &amp;&amp; cashBalance > 0
+        &amp;&amp; dealerCars != nil
+
+    postconditions
+        self.Name == name
+        self.CashBalance == cashBalance
+        self.DealerCars == dealerCars
+
+    return the new dealership that was created
+]]--
+
+function Dealership.new(name, cashBalance, dealerCars)
+
+    if (name == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_DEALER_NAME)
+    end
+    if (string.len(name) == 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_EMPTY_DEALER_NAME)
+    end
+    if (cashBalance &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_ALLOW_CASH_BALANCE_AT_ZERO_OR_LESS)
+    end
+    if (dealerCars == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_DEALER_CARS)
+    end
+
+    local newDealer = setmetatable({}, Dealership)
+    newDealer.Name = name
+    newDealer.CashBalance = cashBalance
+    newDealer.DealerCars = dealerCars
+
+    return newDealer
+end
+
+--[[
+    Gets the dealership name
+
+    precondition none
+    postcondition none
+
+    return the dealership name
+]]--
+
+function Dealership:getName()
+    return self.Name
+end
+
+--[[
+    Sets the dealership name
+
+    precondition nameToSet != nil &amp;&amp; len(nameToSet) !=0
+    postcondition self.Name = nameToSet
+
+    param nameToSet the name of the dealership to set
+]]--
+
+function Dealership:setName(nameToSet)
+
+    if (nameToSet == nil) then
+        error(errorMessages.SHOULD_NOT_SET_NIL_DEALER_NAME)
+    end
+    if (string.len(nameToSet) == 0) then
+        error(errorMessages.SHOULD_NOT_SET_EMPTY_DEALER_NAME)
+    end
+
+    self.Name = nameToSet
+end
+
+--[[
+    Gets the cash balance of the dealership
+
+    precondition none
+    postcondition none
+
+    return the dealerships cash balance 
+]]--
+
+function Dealership:getCashBalance()
+    return self.CashBalance
+end
+
+--[[
+    Sets the cash balance of the dealership
+
+    precondition cashBalanceToSet > 0
+    postcondition self.CashBalance == cashBalanceToSet
+
+    param cashBalanceToSet the cash balance to set
+]]--
+
+function Dealership:setCashBalance(cashBalanceToSet)
+
+    if (cashBalanceToSet &lt; 0) then
+        error(errorMessages.SHOULD_NOT_SET_CASH_BALANCE_TO_BELOW_ZERO)
+    end
+
+    self.CashBalance = cashBalanceToSet
+end
+
+--[[
+    Increments the cash balance of the dealership
+
+    precondition cashBalanceToIncrement > 0
+    postcondition self.CashBalance == self.CashBalance + cashBalanceToIncrement
+
+    param cashBalanceToIncrement the cash balance to increment
+]]--
+
+function Dealership:incrementCashBalance(cashBalanceToIncrement)
+
+    if (cashBalanceToIncrement &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_INCREMENT_CASH_BALANCE_BY_ZERO_OR_LESS)
+    end
+
+    self.CashBalance = self.CashBalance + cashBalanceToIncrement
+end
+
+--[[
+    Decrements the cash balance of the dealership
+
+    precondition cashBalanceToDecrement > 0 &amp;&amp; self.CashBalance - cashBalanceToDecrement > 0
+    postcondition self.CashBalance == self.CashBalance - cashBalanceToDecrement
+
+    param cashBalanceToDecrement the cash balance to decrement
+
+]]--
+
+function Dealership:decrementCashBalance(cashBalanceToDecrement)
+
+    if (cashBalanceToDecrement &lt;= 0) then
+        error(errorMessages.SHOULD_NOT_DECREMENT_CASH_BALANCE_BY_ZERO_OR_LESS)
+    end
+    if (cashBalanceToDecrement > self.CashBalance) then
+        error(errorMessages.SHOULD_NOT_DECREMENT_CASH_BALANCE_BY_MORE_THAN_CASH_BALANCE)
+    end
+
+    self.CashBalance = self.CashBalance - cashBalanceToDecrement
+end
+
+--[[
+    Gets the cars of the dealership
+
+    precondition none
+    postcondition none
+
+    return all of the cars of the dealership
+]]--
+
+function Dealership:getDealershipCars()
+    return self.DealerCars
+end
+
+--[[
+    Gets a car of the dealership at an index
+
+    precondition none
+    postcondition none
+
+    param indexToGet the index to get the car of the dealership
+
+    return the car of the dealership at the index
+]]--
+
+function Dealership:getDealershipCar(indexToGet)
+    return self.DealerCars[indexToGet]
+end
+
+--[[
+    Adds a car to the dealership
+
+    precondition carToAdd != nil
+    postcondition self.DealerCars == self.DealerCars + carToAdd
+
+    param carToAdd the car to add to the dealership
+]]--
+
+function Dealership:addDealershipCar(carToAdd)
+
+    if (carToAdd == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TO_ADD)
+    end
+
+    table.insert(self.DealerCars, carToAdd)
+end
+
+--[[
+    Removes a car from the dealership
+
+    precondition carToRemove != nil
+    postcondition self.DealerCars == self.DealerCars - carToAdd
+
+    param carToRemove the car to remove from the dealership
+
+    return true if the car was removed and false if the car was not removed
+]]--
+
+function Dealership:removeDealershipCar(carToRemove)
+
+    if (carToRemove == nil) then
+        error(errorMessages.SHOULD_NOT_ALLOW_NIL_CAR_TO_REMOVE)
+    end
+
+    indexToRemove = 0
+
+    for key, value in ipairs(self.DealerCars) do
+        if (carToRemove:isEqual(value)) then
+            table.remove(self.DealerCars, key)
+            return true
+        end
+
+        indexToRemove = indexToRemove + 1
+    end
+   
+    return false
+end
+
+return Dealership</string>
         </Properties>
       </Item>
     </Item>
   </Item>
-  <Item class="ServerScriptService" referent="4">
+  <Item class="ServerScriptService" referent="5">
     <Properties>
       <string name="Name">ServerScriptService</string>
     </Properties>
-    <Item class="Script" referent="5">
+    <Item class="Script" referent="6">
       <Properties>
         <string name="Name">Server</string>
         <string name="Source">print("Hello world, from server!")</string>
       </Properties>
     </Item>
   </Item>
-  <Item class="SoundService" referent="6">
+  <Item class="SoundService" referent="7">
     <Properties>
       <string name="Name">SoundService</string>
       <bool name="RespectFilteringEnabled">true</bool>
     </Properties>
   </Item>
-  <Item class="StarterPlayer" referent="7">
+  <Item class="StarterPlayer" referent="8">
     <Properties>
       <string name="Name">StarterPlayer</string>
     </Properties>
-    <Item class="StarterPlayerScripts" referent="8">
+    <Item class="StarterPlayerScripts" referent="9">
       <Properties>
         <string name="Name">StarterPlayerScripts</string>
       </Properties>
-      <Item class="LocalScript" referent="9">
+      <Item class="LocalScript" referent="10">
         <Properties>
           <string name="Name">Client</string>
           <string name="Source">print("Hello world, from client!")</string>
@@ -70,12 +512,12 @@ end
       </Item>
     </Item>
   </Item>
-  <Item class="Workspace" referent="10">
+  <Item class="Workspace" referent="11">
     <Properties>
       <string name="Name">Workspace</string>
       <bool name="FilteringEnabled">true</bool>
     </Properties>
-    <Item class="Part" referent="11">
+    <Item class="Part" referent="12">
       <Properties>
         <string name="Name">Baseplate</string>
         <bool name="Anchored">true</bool>

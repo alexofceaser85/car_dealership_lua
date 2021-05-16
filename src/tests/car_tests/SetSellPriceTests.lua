@@ -1,6 +1,6 @@
 luaUnit = require("luaunit")
 local Car = dofile(".\\src\\shared\\Car.lua")
-local errorMessagesFile = dofile(".\\src\\errormessages\\ErrorMessages.lua")
+local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
 local errorMessages = errorMessagesFile.new()
 
 local SetSellPriceTests = {}
