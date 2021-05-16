@@ -30,7 +30,7 @@ function runTests(directoryTestLocation)
                 break
             end
             
-            delimiter = ",,,"
+            delimiter = "|==|"
             addComma = string.gsub(line, "%s+", delimiter)
             addComma = addComma .. delimiter
             splitFileInfo = {}
