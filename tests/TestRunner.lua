@@ -9,7 +9,7 @@ luaUnit = require("luaunit")
 
 visitedPaths = {}
 
-rootFilePath = ".\\src\\tests"
+rootFilePath = ".\\tests"
 fileExtension = ".lua"
 
 --[[

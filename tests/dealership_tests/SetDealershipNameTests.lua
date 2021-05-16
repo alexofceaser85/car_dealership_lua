@@ -1,6 +1,6 @@
 luaUnit = require("luaunit")
-local dealershipFile = dofile(".\\src\\shared\\Dealership.lua")
-local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
+local dealershipFile = require(".\\src\\ReplicatedStorage\\Common\\Dealership")
+local errorMessagesFile = require(".\\src\\ReplicatedStorage\\Common\\errormessages\\ErrorMessages")
 local errorMessages = errorMessagesFile.new()
 
 local SetDealershipNameTests = {}

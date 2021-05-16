@@ -1,7 +1,7 @@
 luaUnit = require("luaunit")
-local dealershipFile = dofile(".\\src\\shared\\Dealership.lua")
-local carFile = dofile(".\\src\\shared\\Car.lua")
-local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
+local dealershipFile = require(".\\src\\ReplicatedStorage\\Common\\Dealership")
+local carFile = require(".\\src\\ReplicatedStorage\\Common\\Car")
+local errorMessagesFile = require(".\\src\\ReplicatedStorage\\Common\\errormessages\\ErrorMessages")
 local errorMessages = errorMessagesFile.new()
 
 local RemoveDealershipCarsTests = {}

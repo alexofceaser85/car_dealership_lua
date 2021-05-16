@@ -1,4 +1,4 @@
-local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
+local errorMessagesFile = require(".\\src\\ReplicatedStorage\\Common\\errormessages\\ErrorMessages")
 local errorMessages = errorMessagesFile.new()
 
 --[[

@@ -1,6 +1,6 @@
 luaUnit = require("luaunit")
-local Car = dofile(".\\src\\shared\\Car.lua")
-local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
+local Car = require(".\\src\\ReplicatedStorage\\Common\\Car")
+local errorMessagesFile = require(".\\src\\ReplicatedStorage\\Common\\errormessages\\ErrorMessages")
 local errorMessages = errorMessagesFile.new()
 
 local CarConstructorTests = {}

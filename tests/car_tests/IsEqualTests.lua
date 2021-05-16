@@ -1,7 +1,5 @@
 luaUnit = require("luaunit")
-local Car = dofile(".\\src\\shared\\Car.lua")
-local errorMessagesFile = dofile(".\\src\\shared\\errormessages\\ErrorMessages.lua")
-local errorMessages = errorMessagesFile.new()
+local Car = require(".\\src\\ReplicatedStorage\\Common\\Car")
 
 local IsEqualTests = {}
 IsEqualTests.__index = IsEqualTests
